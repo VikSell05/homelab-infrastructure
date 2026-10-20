@@ -1,0 +1,16 @@
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      # Standart web traffic
+      - '80:80'
+      - '443:443'
+      # admin interface
+      - '81:81'
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
