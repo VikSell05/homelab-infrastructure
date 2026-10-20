@@ -9,7 +9,7 @@ An Infrastructure as Code (IaC) repository for my self-hosted home laboratory. B
 - **Storage:** MergerFS pool pooling multiple USB drives into a single logical volume.
 - **Routing & DNS:** Pi-hole (LXC Container) for local DNS resolution and ad-blocking.
 
-```
+```mermaid
 graph TD
     %% Definizione Stili (Colori per GitHub)
     classDef internet fill:#1a1a1a,stroke:#333,stroke-width:2px,color:#fff
