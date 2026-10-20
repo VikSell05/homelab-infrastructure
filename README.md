@@ -11,7 +11,7 @@ An Infrastructure as Code (IaC) repository for my self-hosted home laboratory. B
 
 ```mermaid
 graph TD
-    %% Definizione Stili (Colori per GitHub)
+    %% Style Definition (Colors)
     classDef internet fill:#1a1a1a,stroke:#333,stroke-width:2px,color:#fff
     classDef router fill:#005c99,stroke:#003d66,stroke-width:2px,color:#fff
     classDef lxc fill:#2eb82e,stroke:#1f7a1f,stroke-width:2px,color:#fff
@@ -52,27 +52,27 @@ graph TD
         end
     end
 
-    %% Flusso Traffico Esterno
+    %% External Traffic Flow
     Internet -- HTTPS (Port 443) --> Router
     Router -- Port Forwarding --> CrowdSec
-    CrowdSec -- Traffico Sicuro --> NPM
+    CrowdSec -- Secure Traffic --> NPM
     NPM -- Reverse Proxy --> ImmichServer
     
-    %% Interazioni Interne Immich
+    %% Immich Internal Interactions
     ImmichServer -.-> ImmichML
     ImmichServer --> DB
     ImmichServer --> MergerFS
     
-    %% Aggiornamenti e SSL
-    DuckDNSContainer -. Aggiorna IP Pubblico .-> DuckDNS
-    NPM -. Richiede/Rinnova SSL .-> Internet
+    %% Updates and SSL
+    DuckDNSContainer -. Update Public IP .-> DuckDNS
+    NPM -. Request/Renew SSL .-> Internet
     
     %% DNS Resolution
-    Router -. Assegna Server DNS .-> PiHole
-    PiHole -. Risoluzione .-> Internet
+    Router -. Assign DNS Server .-> PiHole
+    PiHole -. Resolution .-> Internet
     
-    %% Interazione CrowdSec
-    NPM -. Invia Log per Analisi .-> CrowdSec
+    %% CrowdSec Interaction
+    NPM -. Send logs for analysis.-> CrowdSec
 ```
 
 ## 🔒 Security Posture
