@@ -20,11 +20,11 @@ graph TD
     classDef storage fill:#ffcc00,stroke:#b38f00,stroke-width:2px,color:#000
     classDef security fill:#cc0000,stroke:#800000,stroke-width:2px,color:#fff
 
-    %% Nodi Esterni
+    %% External Nodes
     Internet((Internet / 4G)):::internet
     DuckDNS[DuckDNS.org<br/>Dynamic DNS]:::internet
 
-    %% Rete Domestica
+    %% Home Network
     Router[TIM Hub Router<br/>192.168.1.1]:::router
 
     %% Proxmox Host
@@ -46,7 +46,12 @@ graph TD
                 subgraph ImmichStack [Immich Stack]
                     ImmichServer[Immich Server]:::docker
                     ImmichML[Immich ML Engine]:::docker
-                    DB[(Postgres + Redis<br/>SSD NVMe 40GB)]:::storage
+                    ImmichDB[(Postgres + Redis<br/>SSD NVMe 40GB)]:::storage
+                end
+
+                subgraph NextCloudStack [NextCloud Stack]
+                    NextCloudServer[NextCloud Server]:::docker
+                    DB[(MariaDB + Redis<br/>SSD NVMe 40GB)]:::storage
                 end
             end
         end
@@ -57,11 +62,16 @@ graph TD
     Router -- Port Forwarding --> CrowdSec
     CrowdSec -- Secure Traffic --> NPM
     NPM -- Reverse Proxy --> ImmichServer
+    NPM -- Reverse Proxy --> NextCloudServer
     
     %% Immich Internal Interactions
     ImmichServer -.-> ImmichML
     ImmichServer --> DB
     ImmichServer --> MergerFS
+
+    %% NextCloud Internal Interactions
+    NextCloudServer --> NextcloudDB
+    NextCloudServer --> MergerFS
     
     %% Updates and SSL
     DuckDNSContainer -. Update Public IP .-> DuckDNS
@@ -89,7 +99,8 @@ Security is a primary focus of this deployment:
 * **CrowdSec:** IPS/WAF protecting exposed endpoints.
 
 ### Applications
-* **Immich:** High-performance, self-hosted photo and video backup (iCloud alternative) utilizing local machine learning for facial recognition.
+* **Immich:** High-performance, self-hosted photo and video backup utilizing local machine learning for facial recognition.
+* **NextCloud** self-hosted productivity platform which provides private and secure functions for file sharing, collaborative work, and more.
 
 ## 🛠️ Deployment
 
