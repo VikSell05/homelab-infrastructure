@@ -51,7 +51,7 @@ graph TD
 
                 subgraph NextCloudStack [NextCloud Stack]
                     NextCloudServer[NextCloud Server]:::docker
-                    DB[(MariaDB + Redis<br/>SSD NVMe 40GB)]:::storage
+                    NextcloudDB[(MariaDB + Redis<br/>SSD NVMe 40GB)]:::storage
                 end
             end
         end
@@ -66,7 +66,7 @@ graph TD
     
     %% Immich Internal Interactions
     ImmichServer -.-> ImmichML
-    ImmichServer --> DB
+    ImmichServer --> ImmichDB
     ImmichServer --> MergerFS
 
     %% NextCloud Internal Interactions
