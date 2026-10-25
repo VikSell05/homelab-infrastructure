@@ -2,7 +2,7 @@ services:
   db:
     image: mariadb:10.11
     container_name: nextcloud-db
-    command: --transaction-isolation=READ-COMMITTED --log-bin-trust-function-creators=1
+    command: --transaction-isolation=READ-COMMITTED --log-bin-trust-function-creators=1 --tmp-table-size=64M --max-heap-table-size=64M
     restart: unless-stopped
     volumes:
       - ./db:/var/lib/mysql
